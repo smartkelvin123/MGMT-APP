@@ -9,8 +9,21 @@ const {
 } = require("graphql");
 
 // projects type
-
-
+const ProjectType = new GraphQLObjectType({
+  name: "Project",
+  fields: () => ({
+    id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    description: { type: GraphQLString },
+    status: { type: GraphQLString },
+    client: {
+      type: ClientType,
+      resolve(parent, args) {
+        return clients.find((client) => client.id === parent.clientId);
+      },
+    },
+  }),
+});
 
 // clients type
 const ClientType = new GraphQLObjectType({
@@ -38,6 +51,20 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         return clients.find((client) => client.id === args.id);
+      },
+    },
+    //   query to get all projects
+    projects: {
+      type: new GraphQLList(ProjectType),
+      resolve(parent, args) {
+        return projects;
+      },
+    },
+    project: {
+      type: ProjectType,
+      args: { id: { type: GraphQLID } },
+      resolve(parent, args) {
+        return projects.find((project) => project.id === args.id);
       },
     },
   },
