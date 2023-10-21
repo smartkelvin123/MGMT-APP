@@ -22,4 +22,6 @@ app.use(
 );
 
 app.use(express.json());
-console.log(`Server listening on ${port}`.cyan.underline.bold);
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`.cyan.underline.bold);
+});
