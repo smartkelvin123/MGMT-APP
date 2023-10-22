@@ -7,7 +7,10 @@ const connectDB = require("./config/db");
 require("dotenv").config();
 const app = express();
 
-// connect to datebase
+// connect to datebas
+
+
+
 connectDB();
 
 const port = process.env.PORT || 5000;
@@ -15,6 +18,7 @@ const port = process.env.PORT || 5000;
 app.use(
   "/graphql",
   graphqlHTTP({
+    
     schema,
     // graphiql: process.env.NODE_ENV === "development",
     graphiql: true,

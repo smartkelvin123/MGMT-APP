@@ -1,4 +1,5 @@
-// const { projects, clients } = require("../sampleData");   this is because i dont need the data from sample data again
+// const { projects, clients } = require("../sampleData");  
+//  this is because i dont need the data from sample data again
 
 const Project = require("../models/Project");
 const Client = require("../models/Client");
