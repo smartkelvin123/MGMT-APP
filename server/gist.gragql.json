@@ -1,0 +1,60 @@
+
+{
+  clients {
+    name
+  }
+}
+
+{
+  client(id: 1) {
+    name
+    email
+  }
+}
+
+{
+  projects {
+    name
+    status
+  }
+}
+
+{
+  project(id: 1) {
+    name
+    description,
+    client {
+      name
+      email
+    }
+  }
+}
+
+mutation {
+  addClient(name: "Tony Stark", email: "ironman@gmail.com", phone: "955-365-3376") {
+    id
+    name
+    email
+    phone
+  }
+},
+
+mutation {
+  deleteClient(id: 1) {
+    id
+  }
+}
+
+mutation {
+  addProject(name: "Mobile App", description: "This is the project description", status: "new", clientId: "1") {
+   name
+   description
+  }
+}
+
+mutation {
+  updateProject(status: "completed") {
+   name
+   status
+  }
+}

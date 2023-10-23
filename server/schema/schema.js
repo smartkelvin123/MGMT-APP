@@ -1,4 +1,4 @@
-// const { projects, clients } = require("../sampleData");  
+// const { projects, clients } = require("../sampleData");
 //  this is because i dont need the data from sample data again
 
 const Project = require("../models/Project");
@@ -95,13 +95,12 @@ const Mutation = new GraphQLObjectType({
           phone: args.phone,
         });
 
-        return client.save(); // Save the new client to the database and return it.
+        return client.save();
       },
     },
   },
 });
-
 module.exports = new GraphQLSchema({
   query: RootQuery,
-  Mutation,
+  mutation: Mutation, // Include the Mutation object
 });
