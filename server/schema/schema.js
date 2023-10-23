@@ -15,7 +15,7 @@ const {
   GraphQLEnumType,
 } = require("graphql");
 
-// Define the ProjectType
+// Define the Project Type
 const ProjectType = new GraphQLObjectType({
   name: "Project",
   fields: () => ({
@@ -80,7 +80,7 @@ const RootQuery = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
-    // add a project
+    // add a client
     addClient: {
       type: ClientType,
       args: {
@@ -98,7 +98,7 @@ const Mutation = new GraphQLObjectType({
         return client.save();
       },
     },
-    // delete a project
+    // delete a client
     deleteClient: {
       type: ClientType,
       args: {
@@ -119,7 +119,7 @@ const Mutation = new GraphQLObjectType({
           type: new GraphQLEnumType({
             name: "ProjectStatus",
             values: {
-              NOT_STARTED: { value: "Not started" },
+              NOT_STARTED: { value: "NOT_STARTED" },
               IN_PROGRESS: { value: "In Progress" },
               COMPLETED: { value: "Completed" },
             },
@@ -136,6 +136,66 @@ const Mutation = new GraphQLObjectType({
           clientId: args.clientId,
         });
         return project.save();
+      },
+    },
+    // delete a project
+    deleteProject: {
+      type: ProjectType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+      },
+      async resolve(parent, args) {
+        try {
+          const deletedProject = await Project.findByIdAndRemove(args.id);
+          if (!deletedProject) {
+            throw new Error("Project not found or could not be deleted.");
+          }
+          return deletedProject;
+        } catch (error) {
+          throw new Error(`Failed to delete project: ${error.message}`);
+        }
+      },
+    },
+
+    // update a project
+    updateProject: {
+      type: ProjectType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        name: { type: GraphQLString },
+        description: { type: GraphQLString },
+        status: {
+          type: new GraphQLEnumType({
+            name: "ProjectStatusUpdate",
+            values: {
+              NOT_STARTED: { value: "NOT_STARTED" },
+              IN_PROGRESS: { value: "In Progress" },
+              COMPLETED: { value: "Completed" },
+            },
+            defaultValue: "NOT_STARTED",
+          }),
+        },
+      },
+      resolve(parent, args) {
+        const updateFields = {};
+
+        if (args.name) {
+          updateFields.name = args.name;
+        }
+
+        if (args.description) {
+          updateFields.description = args.description;
+        }
+
+        if (args.status) {
+          updateFields.status = args.status;
+        }
+
+        return Project.findByIdAndUpdate(
+          args.id,
+          { $set: updateFields },
+          { new: true }
+        );
       },
     },
   },

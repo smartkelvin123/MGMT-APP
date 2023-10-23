@@ -46,7 +46,7 @@ mutation {
 }
 
 mutation {
-  addProject(name: "Mobile App", description: "This is the project description", status: "new", clientId: "1") {
+  addProject(name: "Mobile App", description: "This is the project description", status: new, clientId: "1") {
    name
    description
   }
