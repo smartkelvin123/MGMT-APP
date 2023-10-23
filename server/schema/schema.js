@@ -48,12 +48,14 @@ const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
     clients: {
+      // to get all client
       type: new GraphQLList(ClientType),
       resolve(parent, args) {
         return Client.find();
       },
     },
     client: {
+      // to get a single client
       type: ClientType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
@@ -61,12 +63,14 @@ const RootQuery = new GraphQLObjectType({
       },
     },
     projects: {
+      // to get all project
       type: new GraphQLList(ProjectType),
       resolve(parent, args) {
         return Project.find();
       },
     },
     project: {
+      // to get a single project
       type: ProjectType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
@@ -172,10 +176,23 @@ const Mutation = new GraphQLObjectType({
               IN_PROGRESS: { value: "In Progress" },
               COMPLETED: { value: "Completed" },
             },
-            defaultValue: "NOT_STARTED",
           }),
         },
       },
+      // resolve(parent, args) {
+      //   return Project.findByIdAndUpdate(
+      //     args.id,
+      //     {
+      //       $set: {
+      //         status: args.status,
+      //         description: args.description,
+      //         name: args.name
+      //       }
+      //     },
+      //     { new: true }
+      //   );
+      // }
+
       resolve(parent, args) {
         const updateFields = {};
 
