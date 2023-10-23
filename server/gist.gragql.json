@@ -58,3 +58,9 @@ mutation {
    status
   }
 }
+// fetch all the cleient
+{
+  clients {
+    name
+  }
+}
