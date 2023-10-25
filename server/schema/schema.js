@@ -1,7 +1,6 @@
 // const { projects, clients } = require("../sampleData");
 //  this is because i dont need the data from sample data again
 
-// Import necessary dependencies and models
 const Project = require("../models/Project");
 const Client = require("../models/Client");
 

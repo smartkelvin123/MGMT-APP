@@ -1,21 +1,42 @@
 import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
+import { ADD_CLIENT } from "../mutation/clientMuataion";
+import { useMutation } from "@apollo/client";
+import { GET_CLIENTS } from "../queries/clientQueries";
 
 const AddClientModal = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
+  const [addClient] = useMutation(ADD_CLIENT, {
+    variables: {
+      name,
+      email,
+      phone,
+    },
+    update(cache, { data: { addClient } }) {
+      const { clients } = cache.readQuery({ query: GET_CLIENTS });
+      cache.writeQuery({
+        query: GET_CLIENTS,
+        data: {
+          clients: clients.concat(addClient),
+          // {client : [...clients,addClient]}             spread mutation
+        },
+      });
+    },
+  });
+
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(name, email, phone);
-
-    // Close the modal after form submission
-    //   const modal = document.getElementById("addClientModal");
-    //   if (modal) {
-    //     const bootstrapModal = new bootstrap.Modal(modal);
-    //     bootstrapModal.hide();
-    //   }
+    //  validation
+    if (name === "" || email === "" || phone === "") {
+      return alert("Please fill in all fields");
+    }
+    addClient(name, email, phone);
+    setName("");
+    setEmail("");
+    setPhone("");
   };
 
   return (
