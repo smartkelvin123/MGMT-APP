@@ -1,8 +1,9 @@
-import Header from "./component/header";
-import Clients from "./component/client";
+// App.js
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
-import AddClientModal from "./component/addClientModal";
-import Project from "./component/project";
+import Header from "./component/header";
+import Home from "./pages/home";
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -24,22 +25,23 @@ const cache = new InMemoryCache({
 });
 
 const client = new ApolloClient({
-  uri: "http://localhost:5000/graphql", // backend server
+  uri: "http://localhost:5000/graphql", // Replace with your backend server URI
   cache: cache,
 });
 
 function App() {
   return (
-    <>
-      <ApolloProvider client={client}>
+    <ApolloProvider client={client}>
+      <Router>
         <div className="container">
           <Header />
-          <AddClientModal />
-          <Project />
-          <Clients />
+
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
         </div>
-      </ApolloProvider>
-    </>
+      </Router>
+    </ApolloProvider>
   );
 }
 

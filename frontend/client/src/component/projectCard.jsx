@@ -8,8 +8,13 @@ const ProjectCard = ({ project }) => {
           <div className="card-body">
             <div className="d-flex justify-content-between align-items-center">
               <h5 className="card-title">{project.name}</h5>
-              <p className="card-text">{project.status}</p>
+              <a className="btn btn-gray" href={"/projects/${project.id"}>
+                view
+              </a>
             </div>
+            <p className="card-text">
+              status : <strong>{project.status}</strong>
+            </p>
           </div>
         </div>
       </div>

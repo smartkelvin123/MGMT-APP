@@ -9,7 +9,7 @@ const Project = () => {
   if (loading) return <Spinner />;
   if (error) return <p>Error :(something is wrong)</p>;
   return (
-    <div>
+    <div className="row mt-4">
       {data.projects.length > 0 ? (
         data.projects.map((project) => (
           <ProjectCard key={project.id} project={project} />
