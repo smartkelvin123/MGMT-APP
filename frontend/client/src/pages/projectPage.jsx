@@ -3,10 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import Spinner from "../component/spinner";
 import { useQuery } from "@apollo/client";
 import { GET_PROJECT } from "../queries/projectQueries";
+import ClientInfo from "../component/ClientInfo";
 
 const Project = () => {
   const { id } = useParams();
-  console.log(id);
 
   const { loading, error, data } = useQuery(GET_PROJECT, {
     variables: {
@@ -31,6 +31,7 @@ const Project = () => {
         <p>{data.project.description}</p>
         <h5 className="mt-3">Project Status</h5>
         <p className="lead">{data.project.status}</p>
+        <ClientInfo client={data.project.client} />
       </div>
     </div>
   );
