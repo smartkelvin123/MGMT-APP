@@ -13,7 +13,7 @@ const AddProjectModal = () => {
   const [status, setStatus] = useState("new");
 
   const [addProject] = useMutation(ADD_PROJECT, {
-    variables: { name, description, clientId, status: "NOT_STARTED" },
+    variables: { name, description, clientId, status },
     update(cache, { data: { addProject } }) {
       const { projects } = cache.readQuery({ query: GET_PROJECTS });
       cache.writeQuery({
