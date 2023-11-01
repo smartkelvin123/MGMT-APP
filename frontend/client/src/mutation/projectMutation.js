@@ -39,6 +39,7 @@ const DELETE_PROJECT = gql`
 `;
 
 // update project
+// update project
 const UPDATE_PROJECT = gql`
   mutation updateProject(
     $id: ID!
@@ -51,7 +52,7 @@ const UPDATE_PROJECT = gql`
       name: $name
       description: $description
       status: $status
-       ){
+    ) {
       id
       name
       description
@@ -61,16 +62,9 @@ const UPDATE_PROJECT = gql`
         name
         email
         phone
-          
       }
-
-
     }
   }
-  )
-
-
-
 `;
 
 export { ADD_PROJECT, DELETE_PROJECT, UPDATE_PROJECT };

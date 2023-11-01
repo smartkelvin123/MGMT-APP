@@ -1,13 +1,26 @@
 import React, { useState } from "react";
-import { useQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { GET_PROJECT } from "../queries/projectQueries";
-import { GET_CLIENTS } from "../queries/clientQueries";
-import { ADD_PROJECT } from "../mutation/projectMutation";
+
+import { UPDATE_PROJECT } from "../mutation/projectMutation";
+import { GET_PROJECTS } from "../queries/projectQueries";
 
 const EditProjectForm = ({ project }) => {
   const [name, setName] = useState(project.name);
   const [description, setDescription] = useState(project.description);
   const [status, setStatus] = useState("");
+
+  const [updateProject] = useMutation(UPDATE_PROJECT, {
+    variables: { id: project.id, name, description, status },
+    refetchQueries: [{ query: GET_PROJECT, variables: { id: project.id } }],
+    update(cache, { data: { updateProject } }) {
+      const { projects } = cache.readQuery({ query: GET_PROJECTS });
+      cache.writeQuery({
+        query: GET_PROJECTS,
+        data: { projects: [...projects, updateProject] },
+      });
+    },
+  });
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -15,11 +28,13 @@ const EditProjectForm = ({ project }) => {
     if (name === "" || description === "" || status === "") {
       return alert("Please fill in all fields");
     }
+
+    updateProject(name, description, status);
   };
 
   return (
     <div className="mt-5">
-      <h1>Edit project details</h1>
+      <h1>update project</h1>
       <form onSubmit={onSubmit}>
         <div className="modal-body">
           <div className="mb-3">
