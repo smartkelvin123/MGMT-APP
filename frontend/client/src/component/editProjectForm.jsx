@@ -3,7 +3,6 @@ import { useMutation } from "@apollo/client";
 import { GET_PROJECT } from "../queries/projectQueries";
 
 import { UPDATE_PROJECT } from "../mutation/projectMutation";
-import { GET_PROJECTS } from "../queries/projectQueries";
 
 const EditProjectForm = ({ project }) => {
   const [name, setName] = useState(project.name);
@@ -13,13 +12,6 @@ const EditProjectForm = ({ project }) => {
   const [updateProject] = useMutation(UPDATE_PROJECT, {
     variables: { id: project.id, name, description, status },
     refetchQueries: [{ query: GET_PROJECT, variables: { id: project.id } }],
-    update(cache, { data: { updateProject } }) {
-      const { projects } = cache.readQuery({ query: GET_PROJECTS });
-      cache.writeQuery({
-        query: GET_PROJECTS,
-        data: { projects: [...projects, updateProject] },
-      });
-    },
   });
 
   const onSubmit = (e) => {
@@ -29,7 +21,14 @@ const EditProjectForm = ({ project }) => {
       return alert("Please fill in all fields");
     }
 
-    updateProject(name, description, status);
+    updateProject({
+      variables: {
+        id: project.id,
+        name,
+        description,
+        status,
+      },
+    });
   };
 
   return (
@@ -64,9 +63,9 @@ const EditProjectForm = ({ project }) => {
               value={status}
               onChange={(e) => setStatus(e.target.value)}
             >
-              <option value="new">Not Started</option>
-              <option value="progress">In Progress</option>
-              <option value="completed">Completed</option>
+              <option value="NOT_STARTED">Not Started</option>
+              <option value="IN_PROGRESS">In Progress</option>
+              <option value="COMPLETED">Completed</option>
             </select>
           </div>
 
