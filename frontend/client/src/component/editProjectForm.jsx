@@ -11,6 +11,10 @@ const EditProjectForm = ({ project }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    if (name === "" || description === "" || status === "") {
+      return alert("Please fill in all fields");
+    }
   };
 
   return (
