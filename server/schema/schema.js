@@ -130,7 +130,7 @@ const Mutation = new GraphQLObjectType({
               IN_PROGRESS: { value: "In Progress" },
               COMPLETED: { value: "Completed" },
             },
-            // defaultValue: "NOT_STARTED",
+            defaultValue: "NOT_STARTED",
           }),
         },
         clientId: { type: GraphQLNonNull(GraphQLID) },
