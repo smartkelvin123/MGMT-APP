@@ -12,7 +12,6 @@ const ProjectSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["NOT_STARTED", "IN_PROGRESS", "COMPLETED"],
-    // Make sure the enum values match those in your GraphQL schema
   },
   clientId: {
     type: mongoose.Schema.Types.ObjectId,

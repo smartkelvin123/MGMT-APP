@@ -3,22 +3,25 @@ import { FaTrash } from "react-icons/fa";
 import { DELETE_CLIENT } from "../mutation/clientMuataion";
 import { useMutation } from "@apollo/client";
 import { GET_CLIENTS } from "../queries/clientQueries";
-// note : rememeber that apolo is a state management. and also no prop drilling
+import { GET_PROJECTS } from "../queries/projectQueries";
+// note : rememeber that apollo is a state management. and also no prop drilling
 
 const ClientRow = ({ client }) => {
   const [deleteClient] = useMutation(DELETE_CLIENT, {
     variables: {
       id: client.id,
     },
-    update(cache, { data: { deleteClient } }) {
-      const { clients } = cache.readQuery({ query: GET_CLIENTS });
-      cache.writeQuery({
-        query: GET_CLIENTS,
-        data: {
-          clients: clients.filter((client) => client.id !== deleteClient.id),
-        },
-      });
-    },
+    // update(cache, { data: { deleteClient } }) {
+    //   const { clients } = cache.readQuery({ query: GET_CLIENTS });
+    //   cache.writeQuery({
+    //     query: GET_CLIENTS,
+    //     data: {
+    //       clients: clients.filter((client) => client.id !== deleteClient.id),
+    //     },
+    //   });
+    // },
+
+    refetchQueries: [{ query: GET_CLIENTS }, { query: GET_PROJECTS }],
   });
 
   return (

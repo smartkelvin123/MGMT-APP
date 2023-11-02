@@ -13,7 +13,7 @@ const AddProjectModal = () => {
   const [status, setStatus] = useState("new");
 
   const [addProject] = useMutation(ADD_PROJECT, {
-    variables: { name, description, clientId, status },
+    variables: { name, description, clientId, status: "NOT_STARTED" },
     update(cache, { data: { addProject } }) {
       const { projects } = cache.readQuery({ query: GET_PROJECTS });
       cache.writeQuery({
@@ -108,9 +108,9 @@ const AddProjectModal = () => {
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}
                       >
-                        <option value="new">Not Started</option>
-                        <option value="progress">In Progress</option>
-                        <option value="completed">Completed</option>
+                        <option value="NOT_STARTED">Not Started</option>
+                        <option value="IN_PROGRESS">In Progress</option>
+                        <option value="COMPLETED">Completed</option>
                       </select>
                     </div>
 

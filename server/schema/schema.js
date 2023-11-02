@@ -1,6 +1,3 @@
-// const { projects, clients } = require("../sampleData");
-//  this is because i dont need the data from sample data again
-
 const Project = require("../models/Project");
 const Client = require("../models/Client");
 
@@ -101,6 +98,7 @@ const Mutation = new GraphQLObjectType({
         return client.save();
       },
     },
+
     // delete a client
     deleteClient: {
       type: ClientType,
@@ -108,6 +106,12 @@ const Mutation = new GraphQLObjectType({
         id: { type: GraphQLNonNull(GraphQLID) },
       },
       resolve(parent, args) {
+        Project.find({ clientId: args.id }).then((projects) => {
+          projects.forEach((project) => {
+            project.deleteOne();
+          });
+        });
+
         return Client.findByIdAndRemove(args.id);
       },
     },
