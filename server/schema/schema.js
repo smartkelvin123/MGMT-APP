@@ -317,15 +317,36 @@ const Mutation = new GraphQLObjectType({
     },
 
     // Mutation to update a user's password
-    // updateUserPassword: {
-    //   type: UserType,
-    //   args: {
-    //     userId: { type: GraphQLNonNull(GraphQLID) },
-    //     password: { type: GraphQLNonNull(GraphQLString) },
-    //   },
-    //   async resolve(parent, args) {
-    //     const { userId, password } = args;
-    //     try {
+
+    updateUserPassword: {
+      type: UserType,
+      args: {
+        userId: { type: GraphQLNonNull(GraphQLID) },
+        password: { type: GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(parent, args) {
+        const { userId, password } = args;
+        try {
+          // Find the user by ID
+          const user = await User.findById(userId);
+
+          if (!user) {
+            throw new Error("User not found");
+          }
+
+          // Hash the new password
+          const hashedPassword = await bcrypt.hash(password, 10);
+
+          // Update the user's password
+          user.password = hashedPassword;
+          await user.save();
+
+          return user;
+        } catch (error) {
+          throw new Error("Failed to update user password: " + error.message);
+        }
+      },
+    },
   },
 });
 
