@@ -1,6 +1,8 @@
 const Project = require("../models/project");
 const Client = require("../models/Client");
 const User = require("../models/user");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const {
   GraphQLObjectType,
@@ -84,11 +86,19 @@ const RootQuery = new GraphQLObjectType({
         return Project.findById(args.id);
       },
     },
+    // to get a single project
     user: {
       type: UserType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         return User.findById(args.id);
+      },
+    },
+    // to get all user
+    users: {
+      type: new GraphQLList(UserType),
+      resolve(parent, args) {
+        return User.find();
       },
     },
   },
@@ -265,7 +275,13 @@ const Mutation = new GraphQLObjectType({
 
     // Mutation to authenticate a user
     loginUser: {
-      type: UserType,
+      type: new GraphQLObjectType({
+        name: "AuthPayload",
+        fields: () => ({
+          user: { type: UserType },
+          token: { type: GraphQLString },
+        }),
+      }),
       args: {
         email: { type: GraphQLNonNull(GraphQLString) },
         password: { type: GraphQLNonNull(GraphQLString) },
@@ -285,7 +301,7 @@ const Mutation = new GraphQLObjectType({
           const passwordMatch = await bcrypt.compare(password, user.password);
 
           if (!passwordMatch) {
-            throw new Error("Invalid credentials");
+            throw Error("Invalid credentials");
           }
 
           // If the email and password match, generate a JWT token
@@ -299,6 +315,17 @@ const Mutation = new GraphQLObjectType({
         }
       },
     },
+
+    // Mutation to update a user's password
+    // updateUserPassword: {
+    //   type: UserType,
+    //   args: {
+    //     userId: { type: GraphQLNonNull(GraphQLID) },
+    //     password: { type: GraphQLNonNull(GraphQLString) },
+    //   },
+    //   async resolve(parent, args) {
+    //     const { userId, password } = args;
+    //     try {
   },
 });
 

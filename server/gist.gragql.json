@@ -64,3 +64,25 @@ mutation {
     name
   }
 }
+
+// get user 
+mutation {
+  loginUser(email: "qwertyexample.com", password: "qwerty123") {
+    user {
+      id
+      name
+      email
+    }
+    token
+  }
+}
+
+// register user 
+mutation {
+  registerUser(name: "qwerty", email: "qwertyexample.com", password: "qwerty123") {
+    id
+    name
+    email
+  }
+}
+
