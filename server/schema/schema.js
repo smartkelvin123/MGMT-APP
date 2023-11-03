@@ -1,5 +1,6 @@
 const Project = require("../models/project");
 const Client = require("../models/Client");
+const User = require("../models/user");
 
 const {
   GraphQLObjectType,
@@ -199,7 +200,6 @@ const Mutation = new GraphQLObjectType({
           }),
         },
       },
-
 
       resolve(parent, args) {
         const updateFields = {};
