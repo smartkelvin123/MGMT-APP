@@ -1,4 +1,4 @@
-const Project = require("../models/Project");
+const Project = require("../models/project");
 const Client = require("../models/Client");
 
 const {
@@ -39,6 +39,16 @@ const ClientType = new GraphQLObjectType({
   }),
 });
 
+// Define the UserType
+const UserType = new GraphQLObjectType({
+  name: "User",
+  fields: () => ({
+    id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    email: { type: GraphQLString },
+  }),
+});
+
 // Define the RootQuery
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
@@ -71,6 +81,13 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         return Project.findById(args.id);
+      },
+    },
+    user: {
+      type: UserType,
+      args: { id: { type: GraphQLID } },
+      resolve(parent, args) {
+        return User.findById(args.id);
       },
     },
   },
@@ -182,19 +199,7 @@ const Mutation = new GraphQLObjectType({
           }),
         },
       },
-      // resolve(parent, args) {
-      //   return Project.findByIdAndUpdate(
-      //     args.id,
-      //     {
-      //       $set: {
-      //         status: args.status,
-      //         description: args.description,
-      //         name: args.name
-      //       }
-      //     },
-      //     { new: true }
-      //   );
-      // }
+
 
       resolve(parent, args) {
         const updateFields = {};
@@ -216,6 +221,82 @@ const Mutation = new GraphQLObjectType({
           { $set: updateFields },
           { new: true }
         );
+      },
+    },
+
+    // register a new user
+
+    registerUser: {
+      type: UserType,
+      args: {
+        name: { type: GraphQLNonNull(GraphQLString) },
+        email: { type: GraphQLNonNull(GraphQLString) },
+        password: { type: GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(parent, args) {
+        const { name, email, password } = args;
+
+        try {
+          // Check if the user already exists
+          const existingUser = await User.findOne({ email });
+          if (existingUser) {
+            throw new Error("User already exists");
+          }
+
+          // Hash the password
+          const hashedPassword = await bcrypt.hash(password, 10);
+
+          // Create a new user
+          const newUser = new User({
+            name,
+            email,
+            password: hashedPassword,
+          });
+
+          // Save the user to the database
+          await newUser.save();
+
+          return newUser;
+        } catch (error) {
+          throw new Error("User registration failed: " + error.message);
+        }
+      },
+    },
+
+    // Mutation to authenticate a user
+    loginUser: {
+      type: UserType,
+      args: {
+        email: { type: GraphQLNonNull(GraphQLString) },
+        password: { type: GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(parent, args) {
+        const { email, password } = args;
+
+        try {
+          // Find the user by email
+          const user = await User.findOne({ email });
+
+          if (!user) {
+            throw new Error("User not found");
+          }
+
+          // Verify the password
+          const passwordMatch = await bcrypt.compare(password, user.password);
+
+          if (!passwordMatch) {
+            throw new Error("Invalid credentials");
+          }
+
+          // If the email and password match, generate a JWT token
+          const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+            expiresIn: "1h",
+          });
+
+          return { user, token };
+        } catch (error) {
+          throw new Error("User authentication failed: " + error.message);
+        }
       },
     },
   },

@@ -5,6 +5,8 @@ const colors = require("colors");
 const connectDB = require("./config/db");
 const cors = require("cors");
 
+const authRoutes = require("./auth/auth");
+
 require("dotenv").config();
 const app = express();
 
@@ -13,6 +15,8 @@ const app = express();
 connectDB();
 
 app.use(cors());
+
+app.use("/auth", authRoutes);
 
 const port = process.env.PORT || 5000;
 
