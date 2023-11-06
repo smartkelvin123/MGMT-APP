@@ -10,7 +10,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [registerUser] = useMutation(REGISTER_USER);
+  const [registerUser, isLoading] = useMutation(REGISTER_USER);
   const [error, setError] = useState("");
 
   const handleRegisterUser = async (e) => {

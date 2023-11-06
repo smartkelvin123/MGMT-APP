@@ -5,6 +5,9 @@ import Header from "./component/header";
 import Home from "./pages/home";
 import NotFound from "./pages/notFound";
 import Project from "./pages/projectPage";
+import Login from "./pages/login";
+import Register from "./pages/register";
+
 const cache = new InMemoryCache({
   typePolicies: {
     Query: {
@@ -39,6 +42,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/projects/:id" element={<Project />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

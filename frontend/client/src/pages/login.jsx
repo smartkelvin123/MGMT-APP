@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Spinner from "../component/spinner";
+
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../mutation/userMutation";
 
@@ -33,8 +33,9 @@ const Login = () => {
       variables: { email, password },
     })
       .then((response) => {
-        // Check the response and navigate accordingly
         if (response.data && response.data.loginUser) {
+          const { user, token } = response.data.loginUser;
+          // You can work with 'user' and 'token' here if needed
           navigate("/");
         } else {
           setError("Invalid credentials. Please try again.");
@@ -48,8 +49,6 @@ const Login = () => {
 
   return (
     <div>
-      {isLoading && <Spinner />}
-
       <div className="container">
         <div className="row">
           <div className="col-md-6 offset-md-3">
