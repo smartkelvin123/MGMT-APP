@@ -7,6 +7,7 @@ import NotFound from "./pages/notFound";
 import Project from "./pages/projectPage";
 import Login from "./pages/login";
 import Register from "./pages/register";
+import PrivateRoute from "./component/privateRoutes";
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -35,21 +36,23 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Router>
-        <div className="container">
+      <div className="container">
+        <Router>
           <Header />
-
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/projects/:id" element={<Project />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="*" element={<NotFound />} />
+            <Route element={<PrivateRoute />}>
+              <Route element={<Home />} path="/" exact />
+              <Route path="/projects/:id" element={<Project />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
           </Routes>
-        </div>
-      </Router>
+        </Router>
+      </div>
     </ApolloProvider>
   );
 }
+
 
 export default App;
