@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Spinner from "../component/spinner";
+
 import { useMutation } from "@apollo/client";
 import { REGISTER_USER } from "../mutation/userMutation";
 import loginImg from "../component/assets/login.png";
@@ -50,12 +50,13 @@ const Register = () => {
 
   return (
     <div>
-      {isLoading && <Spinner />}
-
       <div className="container">
         <div className="row">
           <div className="col-md-6 offset-md-3">
             <h2>Register</h2>
+            <div className="col-md-6">
+              <img src={loginImg} alt="login" width="400" />
+            </div>
             <form onSubmit={handleRegisterUser}>
               <input
                 type="text"
@@ -89,9 +90,6 @@ const Register = () => {
             <p>
               Already have an account? <Link to="/login">Login</Link>
             </p>
-            <div className="col-md-6">
-              <img src={loginImg} alt="login" width="400" />
-            </div>
           </div>
         </div>
       </div>
