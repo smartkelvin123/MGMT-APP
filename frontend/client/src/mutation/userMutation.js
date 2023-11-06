@@ -6,7 +6,6 @@ const REGISTER_USER = gql`
       id
       name
       email
-      password
     }
   }
 `;

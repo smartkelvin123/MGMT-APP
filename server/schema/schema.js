@@ -268,6 +268,7 @@ const Mutation = new GraphQLObjectType({
 
           return newUser;
         } catch (error) {
+          console.error("User registration failed:", error);
           throw new Error("User registration failed: " + error.message);
         }
       },
