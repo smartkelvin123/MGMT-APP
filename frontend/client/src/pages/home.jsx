@@ -15,6 +15,7 @@ const Home = () => {
 
       <Project />
       <hr />
+      <hr />
       <Clients />
     </div>
   );

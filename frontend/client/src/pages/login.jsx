@@ -42,7 +42,7 @@ const Login = () => {
         }
       })
       .catch((error) => {
-        setError("An error occurred. Please try again.");
+        setError("Invalid credentials. Please try again.");
         console.error("Login error:", error);
       });
   };
