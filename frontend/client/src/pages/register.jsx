@@ -43,7 +43,7 @@ const Register = () => {
         }
       })
       .catch((error) => {
-        setError("An error occurred. Please try again.");
+        setError("Registration failed. Please try again");
         console.error("Registration error:", error);
       });
   };

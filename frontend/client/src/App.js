@@ -41,12 +41,15 @@ function App() {
           <Header />
           <Routes>
             <Route path="/login" element={<Login />} />
+
             <Route path="/register" element={<Register />} />
+
             <Route element={<PrivateRoute />}>
-              <Route element={<Home />} path="/" exact />
+              <Route path="/" element={<Home />} />
               <Route path="/projects/:id" element={<Project />} />
-              <Route path="*" element={<NotFound />} />
             </Route>
+
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
       </div>
