@@ -10,7 +10,7 @@ const Header = () => {
 
   const location = useLocation();
 
-  const isHomePage = location.pathname === "/";
+  const isHomePage = location.pathname === "/home";
 
   return (
     <nav className="navbar bg-light mb-4 p-0">
@@ -21,7 +21,7 @@ const Header = () => {
         </a>
         {isLoggedIn && isHomePage && (
           <div style={{ marginLeft: "auto" }}>
-            <LogoutButton />
+            {isLoggedIn && isHomePage && <LogoutButton />}
           </div>
         )}
       </div>

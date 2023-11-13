@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import { useAuth } from "../component/AuthContext";
-
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../mutation/userMutation";
 
@@ -40,7 +38,7 @@ const Login = () => {
           const { user, token } = response.data.loginUser;
 
           login();
-          navigate("/");
+          navigate("/home");
         } else {
           setError("Invalid credentials. Please try again.");
         }
