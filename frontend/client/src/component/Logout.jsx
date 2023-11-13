@@ -9,12 +9,7 @@ const LogoutButton = () => {
     navigate("/login", { replace: true });
   };
   return (
-    <button
-      onClick={handleLogout}
-      type="submit"
-      data-bs-dismiss="modal"
-      className="btn btn-primary"
-    >
+    <button onClick={handleLogout} type="button" class="btn btn-danger">
       logout
     </button>
   );

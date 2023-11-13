@@ -37,7 +37,7 @@ router.post("/register", async (req, res) => {
 
     res.status(201).json({ user: newUser, token });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ message: "Get your credentail right" });
   }
 });
 
