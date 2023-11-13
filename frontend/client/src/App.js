@@ -8,6 +8,7 @@ import Project from "./pages/projectPage";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import PrivateRoute from "./component/privateRoutes";
+import {AuthProvider} from "./component/AuthContext"
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -36,6 +37,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
+        <AuthProvider>
       <div className="container">
         <Router>
           <Header />
@@ -53,6 +55,7 @@ function App() {
           </Routes>
         </Router>
       </div>
+      </AuthProvider>
     </ApolloProvider>
   );
 }

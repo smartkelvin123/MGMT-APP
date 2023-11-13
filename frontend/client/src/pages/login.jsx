@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+// import { useAuth } from "./AuthContext";
+import { useAuth } from "../component/AuthContext";
 
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../mutation/userMutation";
@@ -11,10 +13,11 @@ const Login = () => {
   const [loginUser] = useMutation(LOGIN_USER);
   const [error, setError] = useState("");
 
+  const { login } = useAuth();
+
   const handleLoginUser = async (e) => {
     e.preventDefault();
 
-    // Simple email validation
     if (!email || !email.includes("@")) {
       setError("Please enter a valid email");
       return;
@@ -35,7 +38,8 @@ const Login = () => {
       .then((response) => {
         if (response.data && response.data.loginUser) {
           const { user, token } = response.data.loginUser;
-          // You can work with 'user' and 'token' here if needed
+
+          login();
           navigate("/");
         } else {
           setError("Invalid credentials. Please try again.");
