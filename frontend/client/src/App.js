@@ -10,8 +10,9 @@ import Header from "./component/header";
 import Home from "./pages/home";
 import NotFound from "./pages/notFound";
 import Project from "./pages/projectPage";
-import Login from "./pages/login";
-import Register from "./pages/register";
+import Login from "./pages/loginpage/login";
+import Register from "./pages/registerpage/register";
+
 import PrivateRoute from "./component/privateRoutes";
 import { AuthProvider } from "./component/AuthContext";
 
@@ -48,6 +49,7 @@ function App() {
             <Header />
             <Routes>
               <Route path="/" element={<Navigate to="/login" />} />
+
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route

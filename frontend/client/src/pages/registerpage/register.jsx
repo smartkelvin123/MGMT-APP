@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useMutation } from "@apollo/client";
-import { REGISTER_USER } from "../mutation/userMutation";
-import loginImg from "../component/assets/login.png";
+import { REGISTER_USER } from "../../mutation/userMutation";
+
+import loginImg from "../../component/assets/login.png";
 
 const Register = () => {
   const [name, setName] = useState("");

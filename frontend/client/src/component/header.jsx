@@ -21,7 +21,7 @@ const Header = () => {
         </a>
         {isLoggedIn && isHomePage && (
           <div style={{ marginLeft: "auto" }}>
-            {isLoggedIn && isHomePage && <LogoutButton />}
+            <LogoutButton />
           </div>
         )}
       </div>
