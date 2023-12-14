@@ -38,7 +38,7 @@ const Register = () => {
       .then((response) => {
         // Check the response and navigate accordingly
         if (response.data && response.data.registerUser) {
-          navigate("/login");
+          navigate("/home");
         } else {
           setError("Registration failed. Please try again.");
         }
