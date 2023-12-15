@@ -1,20 +1,31 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-
+import { Typography } from "@mui/material";
+import { useAuth } from "../../component/AuthContext";
+import AuthBox from "../../shared/authBox";
+import RegisterPageInputs from "./registerPageInput";
+import RegisterPageFooter from "./registerPageFooter";
+import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { REGISTER_USER } from "../../mutation/userMutation";
 
-import loginImg from "../../component/assets/login.png";
-
-const Register = () => {
+const RegisterPage = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  const [registerUser, isLoading] = useMutation(REGISTER_USER);
+  const [registerUser, { loading }] = useMutation(REGISTER_USER);
   const [error, setError] = useState("");
+  const { login } = useAuth();
 
-  const handleRegisterUser = async (e) => {
+  const isFormValid =
+    email.includes("@") &&
+    username.length >= 3 &&
+    username.length <= 12 &&
+    password.length >= 6 &&
+    password.length <= 12;
+
+  const handleRegister = async (e) => {
     e.preventDefault();
 
     // Simple email validation
@@ -24,8 +35,14 @@ const Register = () => {
     }
 
     // Password validation
-    if (!password || password.length < 6) {
-      setError("Password must be at least 6 characters");
+    if (password.length < 6 || password.length > 12) {
+      setError("Password must be between 6 and 12 characters");
+      return;
+    }
+
+    // Username validation
+    if (username.length < 3 || username.length > 12) {
+      setError("Username must be between 3 and 12 characters");
       return;
     }
 
@@ -33,11 +50,11 @@ const Register = () => {
     setError("");
 
     registerUser({
-      variables: { name, email, password },
+      variables: { name, email, username, password },
     })
       .then((response) => {
-        // Check the response and navigate accordingly
         if (response.data && response.data.registerUser) {
+          login();
           navigate("/home");
         } else {
           setError("Registration failed. Please try again.");
@@ -50,52 +67,28 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <div className="container">
-        <div className="row">
-          <div className="col-md-6 offset-md-3">
-            <h2>Register</h2>
-            <div className="col-md-6">
-              <img src={loginImg} alt="login" width="400" />
-            </div>
-            <form onSubmit={handleRegisterUser}>
-              <input
-                type="text"
-                placeholder="Name"
-                required
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                required
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                required
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {error && <div className="text-danger">{error}</div>}
-              <button type="submit" className="btn btn-primary btn-block">
-                Register
-              </button>
-            </form>
-            <p>
-              Already have an account? <Link to="/login">Login</Link>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <AuthBox>
+      <Typography variant="h5" sx={{ color: "white" }}>
+        Create an account
+      </Typography>
+      <RegisterPageInputs
+        name={name}
+        setName={setName}
+        email={email}
+        setEmail={setEmail}
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
+      />
+      <RegisterPageFooter
+        handleRegister={handleRegister}
+        isFormValid={isFormValid}
+        loading={loading}
+        error={error}
+      />
+    </AuthBox>
   );
 };
 
-export default Register;
+export default RegisterPage;

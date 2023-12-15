@@ -39,7 +39,7 @@ const LoginPage = () => {
     })
       .then((response) => {
         if (response.data && response.data.loginUser) {
-          const { user, token } = response.data.loginUser;
+          // const { user, token } = response.data.loginUser;
 
           login();
           navigate("/home");
