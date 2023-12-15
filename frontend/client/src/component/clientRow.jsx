@@ -4,7 +4,6 @@ import { DELETE_CLIENT } from "../mutation/clientMuataion";
 import { useMutation } from "@apollo/client";
 import { GET_CLIENTS } from "../queries/clientQueries";
 import { GET_PROJECTS } from "../queries/projectQueries";
-// note : rememeber that apollo is a state management. and also no prop drilling
 
 const ClientRow = ({ client }) => {
   const [deleteClient] = useMutation(DELETE_CLIENT, {
