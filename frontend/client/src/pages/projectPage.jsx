@@ -7,7 +7,7 @@ import ClientInfo from "../component/ClientInfo";
 import DeleteProjectButton from "../component/deleteProjectButton";
 import EditProjectForm from "../component/editProjectForm";
 
-const Project = () => {
+const ProjectPage = () => {
   const { id } = useParams();
 
   const { loading, error, data } = useQuery(GET_PROJECT, {
@@ -42,4 +42,4 @@ const Project = () => {
   );
 };
 
-export default Project;
+export default ProjectPage;
