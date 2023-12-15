@@ -31,7 +31,7 @@ const LoginPageFooter = ({ handleLoginUser, error, isFormValid }) => {
             onClick={handleLoginUser}
             disabled={false}
           />
-          {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <p style={{ color: "red" }}>{{ error }}</p>}
         </Tooltip>
         <RedirectInfo
           text="Don't have an account? "
