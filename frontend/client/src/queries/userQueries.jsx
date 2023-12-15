@@ -6,7 +6,6 @@ export const GET_USER_BY_ID = gql`
       id
       name
       email
-      // Add other user fields you need
     }
   }
 `;
@@ -17,7 +16,6 @@ export const GET_ALL_USERS = gql`
       id
       name
       email
-      // Add other user fields you need
     }
   }
 `;
