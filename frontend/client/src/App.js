@@ -9,7 +9,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import Header from "./component/header";
 import Home from "./pages/home";
 import NotFound from "./pages/notFound";
-import Project from "./pages/projectPage";
+import ProjectPage from "./pages/projectPage";
 import Login from "./pages/loginpage/login";
 import Register from "./pages/registerpage/register";
 
@@ -64,7 +64,7 @@ function App() {
                 path="/projects/:id"
                 element={
                   <PrivateRoute>
-                    <Project />
+                    <ProjectPage />
                   </PrivateRoute>
                 }
               />

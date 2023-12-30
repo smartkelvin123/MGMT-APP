@@ -1,7 +1,8 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import logo from "./assets/logo (1).png";
-import LogoutButton from "./Logout";
+// import LogoutButton from "../appBarLogout/Logout";
+import AppBar from "../appBarLogout/AppBar.";
 import { useAuth } from "./AuthContext";
 
 const Header = () => {
@@ -21,7 +22,8 @@ const Header = () => {
         </a>
         {isLoggedIn && isHomePage && (
           <div style={{ marginLeft: "auto" }}>
-            <LogoutButton />
+            {/* <LogoutButton /> */}
+            <AppBar />
           </div>
         )}
       </div>
