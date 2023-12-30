@@ -49,7 +49,7 @@ const LoginPage = () => {
       })
       .catch((error) => {
         setError("Invalid credentials. Please try again.");
-        console.error("Login error:", error);
+        console.error("Login error:");
       });
   };
 
@@ -62,7 +62,10 @@ const LoginPage = () => {
         password={password}
         setPassword={setPassword}
       />
-      <LoginPageFooter handleLoginUser={handleLoginUser} error={error} />
+      <LoginPageFooter
+        handleLoginUser={handleLoginUser}
+        // error={error}
+      />
     </AuthBox>
   );
 };
