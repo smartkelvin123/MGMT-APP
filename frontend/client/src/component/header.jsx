@@ -1,7 +1,9 @@
+// check this code , it seems that the appbar is overlapping its space . also probably check the code of code on appbar.jsx and logout.jsx
+
 import React from "react";
 import { useLocation } from "react-router-dom";
 import logo from "./assets/logo (1).png";
-// import LogoutButton from "../appBarLogout/Logout";
+
 import AppBar from "../appBarLogout/AppBar.";
 import { useAuth } from "./AuthContext";
 
@@ -22,7 +24,6 @@ const Header = () => {
         </a>
         {isLoggedIn && isHomePage && (
           <div style={{ marginLeft: "auto" }}>
-            {/* <LogoutButton /> */}
             <AppBar />
           </div>
         )}

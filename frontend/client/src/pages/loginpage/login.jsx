@@ -62,10 +62,7 @@ const LoginPage = () => {
         password={password}
         setPassword={setPassword}
       />
-      <LoginPageFooter
-        handleLoginUser={handleLoginUser}
-        // error={error}
-      />
+      <LoginPageFooter handleLoginUser={handleLoginUser} error={error} />
     </AuthBox>
   );
 };
