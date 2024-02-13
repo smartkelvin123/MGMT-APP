@@ -2,7 +2,7 @@ import React from "react";
 
 const Oauth = () => {
   const handleGoogleClick = () => {
-    // google function
+    console.log("hello google");
   };
 
   return (
