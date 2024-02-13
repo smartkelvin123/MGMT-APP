@@ -3,6 +3,7 @@ import CustomPrimaryButton from "../../shared/customPrimaryButton";
 import RedirectInfo from "../../shared/redirectInfo";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
+import Oauth from "../../component/Oauth";
 
 const getFormNotValidMessage = () => {
   return "Username should contain between 3 and 12 characters, and password should contain between 6 and 12 characters. Also, a correct email address should be provided";
@@ -39,6 +40,7 @@ const RegisterPageFooter = ({
         </div>
       </Tooltip>
       {error && <p style={{ color: "red" }}>{error}</p>}
+      <Oauth />
       <RedirectInfo
         text=""
         redirectText="Already have an account?"

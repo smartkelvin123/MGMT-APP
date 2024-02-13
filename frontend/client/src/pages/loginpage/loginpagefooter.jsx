@@ -5,6 +5,7 @@ import CustomPrimaryButton from "../../shared/customPrimaryButton";
 import RedirectInfo from "../../shared/redirectInfo";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
+import Oauth from "../../component/Oauth";
 
 const LoginPageFooter = ({ handleLoginUser, error, isFormValid }) => {
   const getFormNotValidMessage = () => {
@@ -36,6 +37,7 @@ const LoginPageFooter = ({ handleLoginUser, error, isFormValid }) => {
           />
           {error && <p style={{ color: "red" }}>{error}</p>}
         </Tooltip>
+        <Oauth />
         <RedirectInfo
           text="Don't have an account? "
           redirectText="Sign up here"

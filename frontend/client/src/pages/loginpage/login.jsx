@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../mutation/userMutation";
 import { useAuth } from "../../component/AuthContext";
+import Oauth from "../../component/Oauth";
 
 const LoginPage = () => {
   const navigate = useNavigate();
